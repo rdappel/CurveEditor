@@ -42,7 +42,7 @@ After every change the UI resends the whole state. A curve message is small, and
 
 ## Using it
 
-The window has the curve list on the left and the curve view on the right. The view has its own menus (Edit, View, Curves, Tangents), as in XNA's editor.
+The window has the curve list on the left and the curve view on the right, with the tool bar above the view. All commands are in the one menu bar: File, Edit, View, Curves, Tangents, Help.
 
 ### Curves
 
@@ -94,6 +94,7 @@ Whenever a key moves, it and its neighbours get their tangents recomputed by the
 - **Frame All** always reframes. The original skipped framing when the zoom was already close, even if the keys were off screen.
 - **The Position/Value boxes** apply on Enter (or when they lose focus) rather than on every keystroke, so each edit is one undo step.
 - **Keyboard:** the hosted view can't take keyboard input, so the shortcuts are handled by the window: they work whenever you aren't typing in a box or renaming a curve. Clicking the view takes focus from the curve list, so Delete then removes keys, not curves.
+- **One menu bar.** XNA's editor had two: File and Help for the window, and Edit, View, Curves and Tangents on the curve view. They are merged here.
 - **Start-up:** the editor starts with one new curve.
 
 ## Curve files

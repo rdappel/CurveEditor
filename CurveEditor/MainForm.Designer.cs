@@ -53,7 +53,6 @@ namespace CurveEditor
             positionTextBox = new ToolStripTextBox();
             valueLabel = new ToolStripLabel();
             valueTextBox = new ToolStripTextBox();
-            curveMenuStrip = new MenuStrip();
             editMenu = new ToolStripMenuItem();
             undoMenuItem = new ToolStripMenuItem();
             redoMenuItem = new ToolStripMenuItem();
@@ -116,13 +115,12 @@ namespace CurveEditor
             splitContainer.Panel2.SuspendLayout();
             splitContainer.SuspendLayout();
             toolStrip.SuspendLayout();
-            curveMenuStrip.SuspendLayout();
             statusStrip.SuspendLayout();
             SuspendLayout();
             //
             // menuStrip
             //
-            menuStrip.Items.AddRange(new ToolStripItem[] { fileMenu, helpMenu });
+            menuStrip.Items.AddRange(new ToolStripItem[] { fileMenu, editMenu, viewMenu, curvesMenu, tangentsMenu, helpMenu });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
             menuStrip.Size = new Size(1200, 24);
@@ -212,7 +210,6 @@ namespace CurveEditor
             //
             splitContainer.Panel2.Controls.Add(viewport);
             splitContainer.Panel2.Controls.Add(toolStrip);
-            splitContainer.Panel2.Controls.Add(curveMenuStrip);
             splitContainer.Size = new Size(1200, 714);
             splitContainer.SplitterDistance = 180;
             splitContainer.TabIndex = 1;
@@ -240,9 +237,9 @@ namespace CurveEditor
             viewport.BackColor = Color.FromArgb(228, 233, 240);
             viewport.Dock = DockStyle.Fill;
             viewport.GameLibraryPath = "CurveEditor.Native.dll";
-            viewport.Location = new Point(0, 49);
+            viewport.Location = new Point(0, 25);
             viewport.Name = "viewport";
-            viewport.Size = new Size(1016, 665);
+            viewport.Size = new Size(1016, 689);
             viewport.TabIndex = 2;
             viewport.MessageReceived += viewport_MessageReceived;
             viewport.Resize += viewport_Resize;
@@ -251,7 +248,7 @@ namespace CurveEditor
             //
             toolStrip.GripStyle = ToolStripGripStyle.Hidden;
             toolStrip.Items.AddRange(new ToolStripItem[] { selectButton, addKeyButton, moveKeyButton, panButton, zoomButton, toolSeparator, positionLabel, positionTextBox, valueLabel, valueTextBox });
-            toolStrip.Location = new Point(0, 24);
+            toolStrip.Location = new Point(0, 0);
             toolStrip.Name = "toolStrip";
             toolStrip.Size = new Size(1016, 25);
             toolStrip.TabIndex = 1;
@@ -331,14 +328,6 @@ namespace CurveEditor
             valueTextBox.Size = new Size(80, 25);
             valueTextBox.KeyDown += keyTextBox_KeyDown;
             valueTextBox.Leave += keyTextBox_Leave;
-            //
-            // curveMenuStrip
-            //
-            curveMenuStrip.Items.AddRange(new ToolStripItem[] { editMenu, viewMenu, curvesMenu, tangentsMenu });
-            curveMenuStrip.Location = new Point(0, 0);
-            curveMenuStrip.Name = "curveMenuStrip";
-            curveMenuStrip.Size = new Size(1016, 24);
-            curveMenuStrip.TabIndex = 0;
             //
             // editMenu
             //
@@ -789,8 +778,6 @@ namespace CurveEditor
             splitContainer.ResumeLayout(false);
             toolStrip.ResumeLayout(false);
             toolStrip.PerformLayout();
-            curveMenuStrip.ResumeLayout(false);
-            curveMenuStrip.PerformLayout();
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
             ResumeLayout(false);
@@ -824,7 +811,6 @@ namespace CurveEditor
         private ToolStripTextBox positionTextBox;
         private ToolStripLabel valueLabel;
         private ToolStripTextBox valueTextBox;
-        private MenuStrip curveMenuStrip;
         private ToolStripMenuItem editMenu;
         private ToolStripMenuItem undoMenuItem;
         private ToolStripMenuItem redoMenuItem;
