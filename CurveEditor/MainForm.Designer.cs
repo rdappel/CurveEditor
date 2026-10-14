@@ -379,7 +379,7 @@ namespace CurveEditor
             panButton.Name = "panButton";
             panButton.Size = new Size(23, 22);
             panButton.Tag = "Pan";
-            panButton.Text = "Pan Camera (W, or hold Space)";
+            panButton.Text = "Pan Camera (W, hold Space, or drag with the middle button)";
             panButton.Click += modeButton_Click;
             //
             // zoomButton

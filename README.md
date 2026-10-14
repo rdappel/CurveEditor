@@ -34,7 +34,7 @@ All messages are UTF-8 strings. Numbers use the invariant culture.
 | UI → game | `box <x> <y> <width> <height>` / `box none` | The selection box, in pixels. |
 | UI → game | `cursor default\|arrow\|precision\|move\|hand\|resize` | The mouse cursor over the view. |
 | game → UI | `ready` | The view is loaded. The UI responds by sending its whole state. |
-| game → UI | `mouse down\|up <x> <y> left\|right`, `mouse move <x> <y>` | Mouse input on the view, in pixels from its top left. Moves are sent only while a button is held. |
+| game → UI | `mouse down\|up <x> <y> left\|right\|middle`, `mouse move <x> <y>` | Mouse input on the view, in pixels from its top left. Moves are sent only while a button is held. |
 | game → UI | `wheel <notches> <x> <y>` | The mouse wheel turned over the view. |
 | game → UI | `error <text>` | A message could not be applied. |
 
@@ -61,7 +61,7 @@ The window has the curve list on the left and the curve view on the right, with 
 | Select Keys | S | Click a key, or drag a box around keys. Shift adds or removes. If no key is hit, the box picks the tangent arrows of the selected keys instead. |
 | Add Key | A | Click to add a key to every selected curve. |
 | Move Keys | D | Drag the selected keys. A selected tangent arrow turns around its key instead, and becomes Fixed. |
-| Pan Camera | W, or hold Space | Drag the view. |
+| Pan Camera | W, or hold Space | Drag the view. Dragging with the middle mouse button pans in any tool. |
 | Zoom | E | Drag right or up to zoom in. The mouse wheel zooms in any mode. |
 
 Other keys:

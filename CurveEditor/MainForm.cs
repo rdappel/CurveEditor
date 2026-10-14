@@ -232,11 +232,16 @@ public sealed partial class MainForm : Form
         }
     }
 
-    // mouse down|up <x> <y> left|right, or mouse move <x> <y>
+    // mouse down|up <x> <y> left|right|middle, or mouse move <x> <y>
     private void HandleMouse(string[] parts)
     {
         var position = new Vector2(float.Parse(parts[2], CultureInfo.InvariantCulture), float.Parse(parts[3], CultureInfo.InvariantCulture));
-        var button = parts.Length > 4 && parts[4] == "right" ? MouseButtons.Right : MouseButtons.Left;
+        var button = parts.Length < 5 ? MouseButtons.None : parts[4] switch
+        {
+            "right" => MouseButtons.Right,
+            "middle" => MouseButtons.Middle,
+            _ => MouseButtons.Left,
+        };
 
         switch (parts[1])
         {

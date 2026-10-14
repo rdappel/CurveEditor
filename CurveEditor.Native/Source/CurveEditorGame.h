@@ -26,7 +26,7 @@ class CurveViewScreen;
 //     cursor default | arrow | precision | move | hand | resize
 // Game -> host messages:
 //     ready                 content loaded
-//     mouse down|up <x> <y> left|right, mouse move <x> <y>
+//     mouse down|up <x> <y> left|right|middle, mouse move <x> <y>
 //                           in pixels (moves only while a button is held)
 //     wheel <notches> <x> <y>
 //     error <text>          a message could not be applied

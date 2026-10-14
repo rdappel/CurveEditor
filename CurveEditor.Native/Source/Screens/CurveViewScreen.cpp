@@ -239,13 +239,18 @@ void CurveViewScreen::HandleInput(const InputState& input)
 	if (!m_sendMessage) return;
 
 	const Vector2 position = input.GetMousePosition();
-	const bool isDragging = input.IsMouseButtonDown(MouseButton::LEFT) || input.IsMouseButtonDown(MouseButton::RIGHT);
+	static const std::pair<MouseButton, const char*> Buttons[] = {
+		{ MouseButton::LEFT, "left" }, { MouseButton::RIGHT, "right" }, { MouseButton::MIDDLE, "middle" } };
 
-	if (input.IsMouseButtonPressed(MouseButton::LEFT)) SendMouseMessage("down", position, "left");
-	if (input.IsMouseButtonPressed(MouseButton::RIGHT)) SendMouseMessage("down", position, "right");
+	bool isDragging = false;
+	for (const auto& [button, name] : Buttons)
+	{
+		if (input.IsMouseButtonPressed(button)) SendMouseMessage("down", position, name);
+		isDragging = isDragging || input.IsMouseButtonDown(button);
+	}
+
 	if (isDragging && position != m_lastMousePosition) SendMouseMessage("move", position, nullptr);
-	if (input.IsMouseButtonReleased(MouseButton::LEFT)) SendMouseMessage("up", position, "left");
-	if (input.IsMouseButtonReleased(MouseButton::RIGHT)) SendMouseMessage("up", position, "right");
+	for (const auto& [button, name] : Buttons) if (input.IsMouseButtonReleased(button)) SendMouseMessage("up", position, name);
 
 	const int wheel = input.GetMouseWheelDelta();
 	if (wheel != 0)

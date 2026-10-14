@@ -29,6 +29,7 @@ public sealed class CurveEditorController
 
     private int _nextColor;
     private bool _isQuickPan;                       // Space held: pan whatever the mode
+    private bool _isMiddlePan;                      // dragging with the middle button: pan whatever the mode
     private bool _isPressing;
     private Vector2 _pressPosition;
     private Vector2 _previousPosition;
@@ -44,7 +45,7 @@ public sealed class CurveEditorController
     public UndoHistory History { get; } = new();
 
     public EditMode Mode { get; private set; } = EditMode.Select;
-    public EditMode EffectiveMode => _isQuickPan ? EditMode.Pan : Mode;
+    public EditMode EffectiveMode => _isQuickPan || _isMiddlePan ? EditMode.Pan : Mode;
 
     public CurveSmoothness Smoothness { get; private set; } = CurveSmoothness.Fine;
     public ShowMode ShowKeys { get; private set; } = ShowMode.Always;
@@ -56,11 +57,13 @@ public sealed class CurveEditorController
 
     // ---- Mouse and keys ----
 
+    /// <summary>A left-button press runs the current tool; a middle-button press pans, like Space + left.</summary>
     public void MouseDown(Vector2 position, MouseButtons button)
     {
-        if (button != MouseButtons.Left || _isPressing) return;
+        if (button is not (MouseButtons.Left or MouseButtons.Middle) || _isPressing) return;
 
         _isPressing = true;
+        _isMiddlePan = button == MouseButtons.Middle;
         _pressPosition = _previousPosition = position;
 
         if (EffectiveMode == EditMode.Select) _selectionBox = new RectangleF(position.X, position.Y, 0f, 0f);
@@ -97,7 +100,7 @@ public sealed class CurveEditorController
 
     public void MouseUp(Vector2 position, MouseButtons button)
     {
-        if (button != MouseButtons.Left || !_isPressing) return;
+        if (!_isPressing || button != (_isMiddlePan ? MouseButtons.Middle : MouseButtons.Left)) return;
 
         _isPressing = false;
         switch (EffectiveMode)
@@ -114,6 +117,7 @@ public sealed class CurveEditorController
                 _selectionBox = null;
                 break;
         }
+        _isMiddlePan = false;
         OnChanged();
     }
 
