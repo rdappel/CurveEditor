@@ -1,0 +1,15 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="CurveEditor/CurveEditor.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="CurveEditor.Native/CurveEditor.Native.vcxproj" Id="497bf82b-6df3-4e4e-8ea8-e702fa8b976f" />
+  <Folder Name="/KatanaEngine/">
+    <Project Path="KatanaEngine/KatanaEngine.vcxproj" Id="467fb328-bb2b-4bcc-945e-41b96754a22d" />
+    <Project Path="KatanaEngine/WinForms/KatanaEngine.WinForms.csproj">
+      <Platform Solution="*|x64" Project="Any CPU" />
+    </Project>
+  </Folder>
+</Solution>
