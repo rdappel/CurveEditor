@@ -32,6 +32,7 @@ namespace CurveEditor
             fileMenu = new ToolStripMenuItem();
             newMenuItem = new ToolStripMenuItem();
             openMenuItem = new ToolStripMenuItem();
+            closeMenuItem = new ToolStripMenuItem();
             fileSeparator1 = new ToolStripSeparator();
             saveMenuItem = new ToolStripMenuItem();
             saveAsMenuItem = new ToolStripMenuItem();
@@ -128,7 +129,7 @@ namespace CurveEditor
             //
             // fileMenu
             //
-            fileMenu.DropDownItems.AddRange(new ToolStripItem[] { newMenuItem, openMenuItem, fileSeparator1, saveMenuItem, saveAsMenuItem, fileSeparator2, exitMenuItem });
+            fileMenu.DropDownItems.AddRange(new ToolStripItem[] { newMenuItem, openMenuItem, closeMenuItem, fileSeparator1, saveMenuItem, saveAsMenuItem, fileSeparator2, exitMenuItem });
             fileMenu.Name = "fileMenu";
             fileMenu.Size = new Size(37, 20);
             fileMenu.Text = "&File";
@@ -148,6 +149,14 @@ namespace CurveEditor
             openMenuItem.Size = new Size(155, 22);
             openMenuItem.Text = "&Open...";
             openMenuItem.Click += openMenuItem_Click;
+            // 
+            // closeMenuItem
+            // 
+            closeMenuItem.Name = "closeMenuItem";
+            closeMenuItem.ShortcutKeys = Keys.Control | Keys.W;
+            closeMenuItem.Size = new Size(155, 22);
+            closeMenuItem.Text = "&Close";
+            closeMenuItem.Click += closeMenuItem_Click;
             //
             // fileSeparator1
             //
@@ -790,6 +799,7 @@ namespace CurveEditor
         private ToolStripMenuItem fileMenu;
         private ToolStripMenuItem newMenuItem;
         private ToolStripMenuItem openMenuItem;
+        private ToolStripMenuItem closeMenuItem;
         private ToolStripSeparator fileSeparator1;
         private ToolStripMenuItem saveMenuItem;
         private ToolStripMenuItem saveAsMenuItem;

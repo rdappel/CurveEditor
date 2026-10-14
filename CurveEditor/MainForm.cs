@@ -51,17 +51,11 @@ public sealed partial class MainForm : Form
         about.ShowDialog(this);
     }
 
+    private void closeMenuItem_Click(object? sender, EventArgs e) => CloseSelectedCurves();
+
     private void MainForm_FormClosing(object? sender, FormClosingEventArgs e)
     {
-        foreach (var curve in _editor.Curves.Where(curve => curve.IsDirty).ToList())
-        {
-            var answer = MessageBox.Show(this, $"Save changes to {curve.Name}?", AppName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
-            if (answer == DialogResult.Yes && !SaveCurve(curve, saveAs: false)) answer = DialogResult.Cancel;
-            if (answer != DialogResult.Cancel) continue;
-
-            e.Cancel = true;
-            return;
-        }
+        if (!_editor.Curves.Where(curve => curve.IsDirty).ToList().All(ConfirmDiscard)) e.Cancel = true;
     }
 
     // ---- Menus: curve editing ----
@@ -291,6 +285,24 @@ public sealed partial class MainForm : Form
         }
     }
 
+    // Closes the curves selected in the list, asking to save any with unsaved changes.
+    // Closing is undoable (Edit > Undo brings them back).
+    private void CloseSelectedCurves()
+    {
+        var curves = _editor.Curves.Where(curve => curve.IsEditable).ToList();
+        if (curves.Count == 0 || !curves.Where(curve => curve.IsDirty).All(ConfirmDiscard)) return;
+
+        _editor.RemoveCurves(curves);
+        statusLabel.Text = curves.Count == 1 ? $"Closed {curves[0].Name}" : $"Closed {curves.Count} curves";
+    }
+
+    // Asks whether to save a curve's changes. Returns false if the user cancelled (or the save did).
+    private bool ConfirmDiscard(EditCurve curve)
+    {
+        var answer = MessageBox.Show(this, $"Save changes to {curve.Name}?", AppName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+        return answer == DialogResult.No || (answer == DialogResult.Yes && SaveCurve(curve, saveAs: false));
+    }
+
     // Saves the curves selected in the list, as XNA's editor did.
     private void SaveSelectedCurves(bool saveAs)
     {
@@ -395,7 +407,7 @@ public sealed partial class MainForm : Form
 
         var hasSelection = _editor.Curves.Any(curve => curve.IsEditable && curve.HasSelection);
         tangentsMenu.Enabled = hasSelection;
-        saveMenuItem.Enabled = saveAsMenuItem.Enabled = _editor.Curves.Any(curve => curve.IsEditable);
+        closeMenuItem.Enabled = saveMenuItem.Enabled = saveAsMenuItem.Enabled = _editor.Curves.Any(curve => curve.IsEditable);
 
         foreach (var button in _modeButtons) button.Checked = (string)button.Tag! == _editor.EffectiveMode.ToString();
     }
