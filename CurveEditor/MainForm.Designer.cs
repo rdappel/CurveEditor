@@ -28,6 +28,17 @@ namespace CurveEditor
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            curveListMenu = new ContextMenuStrip(components);
+            listNewMenuItem = new ToolStripMenuItem();
+            listOpenMenuItem = new ToolStripMenuItem();
+            listSeparator1 = new ToolStripSeparator();
+            listRenameMenuItem = new ToolStripMenuItem();
+            listVisibleMenuItem = new ToolStripMenuItem();
+            listSeparator2 = new ToolStripSeparator();
+            listSaveMenuItem = new ToolStripMenuItem();
+            listSaveAsMenuItem = new ToolStripMenuItem();
+            listCloseMenuItem = new ToolStripMenuItem();
             menuStrip = new MenuStrip();
             fileMenu = new ToolStripMenuItem();
             newMenuItem = new ToolStripMenuItem();
@@ -117,6 +128,7 @@ namespace CurveEditor
             splitContainer.SuspendLayout();
             toolStrip.SuspendLayout();
             statusStrip.SuspendLayout();
+            curveListMenu.SuspendLayout();
             SuspendLayout();
             //
             // menuStrip
@@ -239,7 +251,79 @@ namespace CurveEditor
             curveListView.BeforeLabelEdit += curveListView_BeforeLabelEdit;
             curveListView.ItemChecked += curveListView_ItemChecked;
             curveListView.SelectedIndexChanged += curveListView_SelectedIndexChanged;
+            curveListView.ContextMenuStrip = curveListMenu;
             curveListView.KeyDown += curveListView_KeyDown;
+            //
+            // curveListMenu
+            //
+            curveListMenu.Items.AddRange(new ToolStripItem[] { listNewMenuItem, listOpenMenuItem, listSeparator1, listRenameMenuItem, listVisibleMenuItem, listSeparator2, listSaveMenuItem, listSaveAsMenuItem, listCloseMenuItem });
+            curveListMenu.Name = "curveListMenu";
+            curveListMenu.Size = new Size(170, 170);
+            curveListMenu.Opening += curveListMenu_Opening;
+            //
+            // listNewMenuItem
+            //
+            listNewMenuItem.Name = "listNewMenuItem";
+            listNewMenuItem.ShortcutKeyDisplayString = "Ctrl+N";
+            listNewMenuItem.Size = new Size(169, 22);
+            listNewMenuItem.Text = "&New Curve";
+            listNewMenuItem.Click += listNewMenuItem_Click;
+            //
+            // listOpenMenuItem
+            //
+            listOpenMenuItem.Name = "listOpenMenuItem";
+            listOpenMenuItem.ShortcutKeyDisplayString = "Ctrl+O";
+            listOpenMenuItem.Size = new Size(169, 22);
+            listOpenMenuItem.Text = "&Open...";
+            listOpenMenuItem.Click += listOpenMenuItem_Click;
+            //
+            // listSeparator1
+            //
+            listSeparator1.Name = "listSeparator1";
+            listSeparator1.Size = new Size(166, 6);
+            //
+            // listRenameMenuItem
+            //
+            listRenameMenuItem.Name = "listRenameMenuItem";
+            listRenameMenuItem.ShortcutKeyDisplayString = "F2";
+            listRenameMenuItem.Size = new Size(169, 22);
+            listRenameMenuItem.Text = "&Rename";
+            listRenameMenuItem.Click += listRenameMenuItem_Click;
+            //
+            // listVisibleMenuItem
+            //
+            listVisibleMenuItem.Name = "listVisibleMenuItem";
+            listVisibleMenuItem.Size = new Size(169, 22);
+            listVisibleMenuItem.Text = "&Visible";
+            listVisibleMenuItem.Click += listVisibleMenuItem_Click;
+            //
+            // listSeparator2
+            //
+            listSeparator2.Name = "listSeparator2";
+            listSeparator2.Size = new Size(166, 6);
+            //
+            // listSaveMenuItem
+            //
+            listSaveMenuItem.Name = "listSaveMenuItem";
+            listSaveMenuItem.ShortcutKeyDisplayString = "Ctrl+S";
+            listSaveMenuItem.Size = new Size(169, 22);
+            listSaveMenuItem.Text = "&Save";
+            listSaveMenuItem.Click += listSaveMenuItem_Click;
+            //
+            // listSaveAsMenuItem
+            //
+            listSaveAsMenuItem.Name = "listSaveAsMenuItem";
+            listSaveAsMenuItem.Size = new Size(169, 22);
+            listSaveAsMenuItem.Text = "Save &As...";
+            listSaveAsMenuItem.Click += listSaveAsMenuItem_Click;
+            //
+            // listCloseMenuItem
+            //
+            listCloseMenuItem.Name = "listCloseMenuItem";
+            listCloseMenuItem.ShortcutKeyDisplayString = "Ctrl+W";
+            listCloseMenuItem.Size = new Size(169, 22);
+            listCloseMenuItem.Text = "&Close";
+            listCloseMenuItem.Click += listCloseMenuItem_Click;
             //
             // viewport
             //
@@ -787,6 +871,7 @@ namespace CurveEditor
             splitContainer.ResumeLayout(false);
             toolStrip.ResumeLayout(false);
             toolStrip.PerformLayout();
+            curveListMenu.ResumeLayout(false);
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
             ResumeLayout(false);
@@ -809,6 +894,16 @@ namespace CurveEditor
         private ToolStripMenuItem aboutMenuItem;
         private SplitContainer splitContainer;
         private ListView curveListView;
+        private ContextMenuStrip curveListMenu;
+        private ToolStripMenuItem listNewMenuItem;
+        private ToolStripMenuItem listOpenMenuItem;
+        private ToolStripSeparator listSeparator1;
+        private ToolStripMenuItem listRenameMenuItem;
+        private ToolStripMenuItem listVisibleMenuItem;
+        private ToolStripSeparator listSeparator2;
+        private ToolStripMenuItem listSaveMenuItem;
+        private ToolStripMenuItem listSaveAsMenuItem;
+        private ToolStripMenuItem listCloseMenuItem;
         private KatanaEngine.WinForms.KatanaViewport viewport;
         private ToolStrip toolStrip;
         private ToolStripButton selectButton;

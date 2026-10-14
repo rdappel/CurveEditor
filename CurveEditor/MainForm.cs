@@ -153,12 +153,54 @@ public sealed partial class MainForm : Form
             _editor.RemoveCurves(curveListView.SelectedItems.Cast<ListViewItem>().Select(GetCurve).ToList());
             e.Handled = true;
         }
-        else if (e.KeyCode == Keys.F2 && curveListView.FocusedItem != null)
+        else if (e.KeyCode == Keys.F2)
         {
-            curveListView.FocusedItem.BeginEdit();
+            RenameSelectedCurve();
             e.Handled = true;
         }
     }
+
+    private void RenameSelectedCurve()
+    {
+        var item = curveListView.SelectedItems.Count == 1 ? curveListView.SelectedItems[0] : curveListView.FocusedItem;
+        if (item == null) return;
+
+        curveListView.Focus();
+        item.BeginEdit();
+    }
+
+    // ---- Curve list: right-click menu ----
+
+    // Right-clicking an item selects it (the list does that itself); the menu then acts on the selection.
+    private void curveListMenu_Opening(object? sender, System.ComponentModel.CancelEventArgs e)
+    {
+        var selected = SelectedListCurves();
+        listRenameMenuItem.Enabled = selected.Count == 1;
+        listVisibleMenuItem.Enabled = listSaveMenuItem.Enabled = listSaveAsMenuItem.Enabled = listCloseMenuItem.Enabled = selected.Count > 0;
+        listVisibleMenuItem.Checked = selected.Count > 0 && selected.All(curve => curve.IsVisible);
+    }
+
+    private void listNewMenuItem_Click(object? sender, EventArgs e) => CreateCurve();
+
+    private void listOpenMenuItem_Click(object? sender, EventArgs e) => openMenuItem_Click(sender, e);
+
+    private void listRenameMenuItem_Click(object? sender, EventArgs e) => RenameSelectedCurve();
+
+    // Shows the selected curves, or hides them if they are all shown.
+    private void listVisibleMenuItem_Click(object? sender, EventArgs e)
+    {
+        var selected = SelectedListCurves();
+        var isVisible = !selected.All(curve => curve.IsVisible);
+        foreach (var curve in selected) _editor.SetVisible(curve, isVisible);
+    }
+
+    private void listSaveMenuItem_Click(object? sender, EventArgs e) => SaveSelectedCurves(saveAs: false);
+
+    private void listSaveAsMenuItem_Click(object? sender, EventArgs e) => SaveSelectedCurves(saveAs: true);
+
+    private void listCloseMenuItem_Click(object? sender, EventArgs e) => CloseSelectedCurves();
+
+    private List<EditCurve> SelectedListCurves() => curveListView.SelectedItems.Cast<ListViewItem>().Select(GetCurve).ToList();
 
     private static EditCurve GetCurve(ListViewItem item) => (EditCurve)item.Tag!;
 

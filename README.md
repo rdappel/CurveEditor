@@ -50,6 +50,7 @@ The window has the curve list on the left and the curve view on the right, with 
 - Select curves in the list to edit them. Ctrl+click or Shift+click selects several, and edits (adding keys, tangents, loops) apply to each selected curve.
 - The check box shows or hides a curve.
 - Rename a curve by clicking it again or pressing F2. Names are kept unique (`Curve`, `Curve#1`, ...).
+- Right-click the list for New Curve, Open, Rename, Visible, Save, Save As and Close.
 - **File > Close** (Ctrl+W) closes the selected curves, asking to save any with unsaved changes. Delete (with the list focused) removes them without asking. Both can be undone.
 - **File > Save** (Ctrl+S) / **Save As** save the selected curves, one file each. Closing asks about each curve with unsaved changes.
 
